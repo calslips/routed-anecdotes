@@ -65,10 +65,13 @@ const Footer = () => (
 
 const CreateNew = (props) => {
   const content = useField()
+  const { reset: resetContent, ...contentAttributes } = content
   const author = useField()
+  const { reset: resetAuthor, ...authorAttributes } = author
   const info = useField()
+  const { reset: resetInfo, ...infoAttributes } = info
 
-  const history = useHistory();
+  const history = useHistory()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -84,20 +87,25 @@ const CreateNew = (props) => {
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <div>
           content
-          <input name='content' {...content} />
+          <input name='content' {...contentAttributes} />
         </div>
         <div>
           author
-          <input name='author' {...author} />
+          <input name='author' {...authorAttributes} />
         </div>
         <div>
           url for more info
-          <input name='info' {...info} />
+          <input name='info' {...infoAttributes} />
         </div>
         <button>create</button>
+        <button onClick={(event) => {
+          content.reset(event)
+          author.reset(event)
+          info.reset(event)
+        }}>reset</button>
       </form>
     </div>
   )
